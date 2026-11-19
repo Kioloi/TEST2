@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f7f5" />
+    <title>Chemistry Study Space</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" data-page="home" aria-label="Chemistry home">
+          <span class="brand-mark" aria-hidden="true"><span>C</span></span>
+          <span>Chemistry</span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <button class="nav-link active" type="button" data-page="home">Home</button>
+          <button class="nav-link" type="button" data-page="units">Unit review</button>
+          <button class="nav-link" type="button" data-page="questions">Regents review</button>
+          <button class="nav-link" type="button" data-page="challenge">Challenge</button>
+        </nav>
+        <div class="account-controls">
+          <span class="topbar-note"><span class="status-dot"></span> STUDENT REVIEW</span>
+          <button class="button button-outline button-small" id="login-open" type="button">Teacher sign in</button>
+          <div class="user-panel" id="user-panel" hidden>
+            <span class="user-identity"><strong id="user-email"></strong><small>TEACHER ACCESS</small></span>
+            <button class="button button-outline button-small" id="logout-button" type="button">Log out</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="connection-banner" id="connection-banner" role="status" hidden></div>
+
+      <main>
+        <section class="page active" id="home-page" aria-labelledby="welcome-title">
+          <div class="hero">
+            <div class="hero-copy">
+              <span class="eyebrow"><span class="pulse-dot"></span> CHEMISTRY STUDY SPACE</span>
+              <h1 id="welcome-title">Chemistry,<br /><span>step by step.</span></h1>
+              <p class="hero-description">Review class materials, practice Regents questions, and learn from each explanation.</p>
+              <div class="hero-actions">
+                <button class="button button-primary" type="button" data-page="units"><span class="button-symbol">↗</span><span>Explore unit review</span></button>
+                <button class="button button-secondary" type="button" data-page="questions"><span>Practice questions</span><span aria-hidden="true">↗</span></button>
+                <button class="button button-challenge" type="button" data-page="challenge"><span aria-hidden="true">✳</span><span>Take a challenge</span></button>
+              </div>
+              <div class="hero-caption"><span class="caption-line"></span> STUDY AT YOUR OWN PACE</div>
+            </div>
+          </div>
+
+          <div class="section-heading">
+            <div><span class="eyebrow">YOUR TOOLKIT</span><h2>Choose a study mode</h2></div>
+            <p>One small step at a time.</p>
+          </div>
+          <div class="tool-grid">
+            <button class="tool-card notes-card" type="button" data-page="units">
+              <span class="card-icon" aria-hidden="true">▤</span>
+              <span class="card-copy"><strong>Unit review</strong><span>Class slides, handouts, and study files.</span></span>
+              <span class="card-arrow" aria-hidden="true">↗</span>
+            </button>
+            <button class="tool-card questions-card" type="button" data-page="questions">
+              <span class="card-icon" aria-hidden="true">⌁</span>
+              <span class="card-copy"><strong>Regents question review</strong><span>Choose an answer and learn from the explanation.</span></span>
+              <span class="card-arrow" aria-hidden="true">↗</span>
+            </button>
+            <button class="tool-card challenge-card" type="button" data-page="challenge">
+              <span class="card-icon" aria-hidden="true">✳</span>
+              <span class="card-copy"><strong>Challenge</strong><span>Try a shuffled set. Skip anything and keep going.</span></span>
+              <span class="card-arrow" aria-hidden="true">↗</span>
+            </button>
+          </div>
+          <p class="privacy-note"><span aria-hidden="true">◈</span> Teacher edits are saved in this browser only. Students using other devices will not see them.</p>
+        </section>
+
+        <section class="page workspace-page" id="units-page" aria-labelledby="units-title" hidden>
+          <button class="back-link" type="button" data-page="home">← Back to home</button>
+          <div class="workspace-heading">
+            <span class="eyebrow">01 / CLASS MATERIALS</span>
+            <h1 id="units-title">Unit review<span class="heading-period">.</span></h1>
+            <p>Review class slides, handouts, and files uploaded by your teacher.</p>
+          </div>
+          <div class="resource-layout">
+            <form class="editor-card resource-editor" id="resource-form" hidden>
+              <div class="form-heading"><span class="form-icon" aria-hidden="true">↑</span><div><h2>Share a unit file</h2><p>Upload a presentation or class handout.</p></div></div>
+              <label for="resource-title">Display name <span class="optional">(optional)</span></label>
+              <input id="resource-title" name="title" type="text" placeholder="e.g. Atomic structure slides" maxlength="120" />
+              <label for="resource-file">PowerPoint or PDF</label>
+              <input class="visually-hidden" id="resource-file" name="file" type="file" accept=".ppt,.pptx,.pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf" required />
+              <label class="file-picker" for="resource-file"><span class="upload-icon">↑</span><span><strong>Choose a file</strong><small>PPT, PPTX, or PDF · up to 50 MB</small></span><span class="file-name" id="resource-file-name">No file selected</span></label>
+              <div class="form-footer"><span class="form-message" id="resource-message" role="status" aria-live="polite"></span><button class="button button-primary" type="submit">Upload file <span aria-hidden="true">↗</span></button></div>
+            </form>
+            <section class="saved-section resource-list-section" aria-labelledby="resource-list-title">
+              <div class="saved-heading"><div><span class="eyebrow">STUDY LIBRARY</span><h2 id="resource-list-title">Unit materials</h2></div><span class="count-badge" id="resource-count">0</span></div>
+              <p class="form-message" id="resource-status" role="status" aria-live="polite"></p>
+              <div class="resource-list" id="resource-list"><div class="empty-state"><span>✧</span><strong>Loading materials</strong><p>Looking for your class files...</p></div></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page workspace-page" id="questions-page" aria-labelledby="questions-title" hidden>
+          <button class="back-link" type="button" data-page="home">← Back to home</button>
+          <div class="workspace-heading question-heading">
+            <div><span class="eyebrow">02 / REGENTS PRACTICE</span><h1 id="questions-title">Question review<span class="heading-period">.</span></h1><p>Pick A, B, C, or D. Your explanation appears after you answer.</p></div>
+            <button class="button button-primary" id="new-question-button" type="button" hidden>＋ Add question</button>
+          </div>
+          <form class="editor-card question-editor" id="question-form" hidden>
+            <div class="form-heading"><span class="form-icon question-icon">⌁</span><div><h2 id="question-form-title">Add a Regents question</h2><p>Add a prompt, four choices, the correct answer, and an explanation.</p></div></div>
+            <div class="question-form-grid">
+              <div class="question-fields">
+                <label for="question-topic">Unit or topic <span class="optional">(optional)</span></label>
+                <input id="question-topic" name="topic" type="text" placeholder="e.g. Chemical bonding" maxlength="80" />
+                <label for="question-prompt">Question</label>
+                <textarea id="question-prompt" name="prompt" rows="4" placeholder="Type the Regents-style question..." maxlength="5000" required></textarea>
+                <label for="question-image">Question image <span class="optional">(optional)</span></label>
+                <input class="visually-hidden" id="question-image" name="image" type="file" accept="image/*" />
+                <label class="file-picker" for="question-image"><span class="upload-icon">↑</span><span><strong>Add an image</strong><small>PNG, JPG, or WebP · up to 15 MB</small></span><span class="file-name" id="question-image-name">No file selected</span></label>
+                <p class="form-hint" id="question-image-hint"></p>
+              </div>
+              <div class="answer-fields">
+                <span class="field-label">Answer choices</span>
+                <label class="choice-editor"><span>A</span><input name="choice_a" type="text" maxlength="500" required placeholder="Choice A" /></label>
+                <label class="choice-editor"><span>B</span><input name="choice_b" type="text" maxlength="500" required placeholder="Choice B" /></label>
+                <label class="choice-editor"><span>C</span><input name="choice_c" type="text" maxlength="500" required placeholder="Choice C" /></label>
+                <label class="choice-editor"><span>D</span><input name="choice_d" type="text" maxlength="500" required placeholder="Choice D" /></label>
+                <label for="correct-choice">Correct answer</label>
+                <select id="correct-choice" name="correct_option" required><option value="">Choose the answer</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                <label for="question-explanation">Explanation <span class="optional">(text or video required)</span></label>
+                <textarea id="question-explanation" name="explanation" rows="3" maxlength="5000" placeholder="Explain why this answer is correct..."></textarea>
+                <label for="explanation-url">Video link <span class="optional">(optional)</span></label>
+                <input id="explanation-url" name="explanation_url" type="url" placeholder="https://..." />
+                <label for="explanation-video">Or upload a short video <span class="optional">(optional)</span></label>
+                <input class="visually-hidden" id="explanation-video" name="video" type="file" accept="video/mp4,video/webm" />
+                <label class="file-picker" for="explanation-video"><span class="upload-icon">▶</span><span><strong>Add an explanation video</strong><small>MP4 or WebM · up to 100 MB</small></span><span class="file-name" id="explanation-video-name">No file selected</span></label>
+                <p class="form-hint" id="explanation-video-hint"></p>
+              </div>
+            </div>
+            <div class="form-footer"><span class="form-message" id="question-message" role="status" aria-live="polite"></span><div class="form-actions"><button class="button button-outline" id="cancel-question" type="button">Cancel</button><button class="button button-primary" type="submit"><span id="question-submit-label">Save question</span> <span aria-hidden="true">↗</span></button></div></div>
+          </form>
+          <p class="form-message page-status" id="questions-status" role="status" aria-live="polite"></p>
+          <section aria-label="Regents practice question set">
+            <div class="question-list-intro"><span class="eyebrow">QUESTION BANK</span><span class="count-badge" id="question-count">0</span></div>
+            <div class="question-list" id="questions-list"><div class="empty-state"><span>✧</span><strong>Loading questions</strong><p>Getting the class question set...</p></div></div>
+          </section>
+        </section>
+
+        <section class="page workspace-page" id="challenge-page" aria-labelledby="challenge-title" hidden>
+          <button class="back-link" type="button" data-page="home">← Back to home</button>
+          <div class="workspace-heading">
+            <span class="eyebrow">03 / QUICK PRACTICE</span>
+            <h1 id="challenge-title">Challenge<span class="heading-period">.</span></h1>
+            <p>A shuffled Regents set. Answer what you can, skip anything, and keep moving.</p>
+          </div>
+          <div class="challenge-panel" id="challenge-intro">
+            <span class="challenge-emblem" aria-hidden="true">✳</span>
+            <span class="eyebrow">READY WHEN YOU ARE</span>
+            <h2>Think fast. Learn as you go.</h2>
+            <p>Questions are shuffled each round. You can skip any question; explanations appear after you answer.</p>
+            <button class="button button-primary" id="start-challenge" type="button">Start challenge <span aria-hidden="true">↗</span></button>
+            <p class="challenge-empty-message" id="challenge-empty-message" role="status"></p>
+          </div>
+          <div class="challenge-session" id="challenge-session" hidden>
+            <div class="challenge-progress"><span id="challenge-progress-label">Question 1 of 1</span><span id="challenge-score-label">0 correct</span></div>
+            <div class="challenge-progress-track"><span id="challenge-progress-bar"></span></div>
+            <div class="question-list" id="challenge-question"></div>
+          </div>
+          <div class="challenge-results" id="challenge-results" hidden>
+            <span class="challenge-emblem" aria-hidden="true">✳</span>
+            <span class="eyebrow">ROUND COMPLETE</span>
+            <h2 id="challenge-result-title">Nice work.</h2>
+            <p id="challenge-result-summary"></p>
+            <button class="button button-primary" id="play-again" type="button">Play again <span aria-hidden="true">↻</span></button>
+          </div>
+        </section>
+      </main>
+      <footer class="footer"><span>Chemistry</span><span>STUDY SPACE</span></footer>
+    </div>
+
+    <dialog class="auth-dialog" id="auth-dialog" aria-labelledby="auth-title">
+      <div class="dialog-top">
+        <span class="brand-mark" aria-hidden="true"><span>C</span></span>
+        <button class="dialog-close" id="auth-close" type="button" aria-label="Close teacher sign in">×</button>
+      </div>
+      <div class="dialog-copy"><span class="eyebrow">TEACHER ACCESS</span><h2 id="auth-title">Teacher sign in<span class="heading-period">.</span></h2><p>Sign in to manage materials and questions saved in this browser.</p></div>
+      <form class="auth-form" id="login-form">
+        <label for="login-username">Username</label><input id="login-username" name="username" type="text" autocomplete="username" required />
+        <label for="login-password">Password</label><input id="login-password" name="password" type="password" autocomplete="current-password" required />
+        <p class="form-message" id="auth-message" role="status" aria-live="polite"></p>
+        <button class="button button-primary auth-submit" type="submit">Sign in <span aria-hidden="true">↗</span></button>
+      </form>
+      <form class="auth-form" id="create-teacher-form" hidden>
+        <label for="setup-username">Teacher username</label><input id="setup-username" name="username" type="text" autocomplete="username" minlength="3" maxlength="40" required />
+        <label for="setup-password">Create password</label><input id="setup-password" name="password" type="password" autocomplete="new-password" minlength="10" required />
+        <label for="setup-password-confirm">Confirm password</label><input id="setup-password-confirm" name="confirm_password" type="password" autocomplete="new-password" minlength="10" required />
+        <p class="form-message" id="setup-message" role="status" aria-live="polite"></p>
+        <button class="button button-primary auth-submit" type="submit">Create teacher login</button>
+      </form>
+      <p class="auth-hint">This is a basic local lock, not secure account protection. Your data and login stay in this browser and are not shared to other devices.</p>
+    </dialog>
+  </body>
+</html>
